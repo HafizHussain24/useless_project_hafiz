@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUSAT Bike Ride</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Three.js Canvas will be injected here -->
+    </div>
+    <script>
+        window.addEventListener('error', function(e) {
+            const err = document.createElement('div');
+            err.style = 'position:fixed;top:0;left:0;z-index:9999;background:red;color:white;padding:10px;font-family:sans-serif;width:100%;';
+            err.innerHTML = 'FATAL ERROR: ' + e.message + ' at ' + e.filename + ':' + e.lineno;
+            document.body.appendChild(err);
+        });
+    </script>
 
+    <div id="ui-layer">
+        <!-- Main Menu -->
+        <div id="menu-screen" class="screen active">
+            <h1>CUSAT Bike Ride</h1>
+            <p>Endless 3D Rider</p>
+            <div class="instructions">
+                <p><strong>Controls:</strong></p>
+                <p>[W][A][S][D] or [Arrows] - Move / Brake</p>
+                <p>[Space] (Hold) - Equip Helmet</p>
+                <p>[E] - Pick up / Drop off passenger</p>
+            </div>
+            <button id="start-btn">START RIDE</button>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud-screen" class="screen">
+            <div class="hud-top">
+                <div class="hud-left">
+                    <div class="hud-box">DISTANCE<br><span id="distance-val" class="highlight-text">0m</span></div>
+                    <div class="hud-box">POINTS<br><span id="points-val" class="highlight-text">0</span></div>
+                </div>
+                
+                <div class="hud-center">
+                    <div id="speedometer-box">
+                        <div class="speed-value"><span id="speed-val">0</span> <span class="unit">km/h</span></div>
+                        <div class="speed-bar-bg"><div id="speed-bar"></div></div>
+                    </div>
+                </div>
+
+                <div class="hud-right">
+                    <div class="hud-box phase-box">PHASE<br><span id="phase-val" class="highlight-text">Amenity Centre</span></div>
+                    <div class="hud-box status-panel" id="helmet-status">
+                        HELMET<br><span id="helmet-val" class="highlight-text">OFF</span>
+                        <div id="helmet-bar-container"><div id="helmet-bar"></div></div>
+                    </div>
+                    <div class="hud-box status-panel" id="passenger-status">
+                        TRIPLES<br><span id="passenger-val" class="highlight-text">No</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hud-bottom">
+                <div id="notification-area"></div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="screen">
+            <h2>GAME OVER</h2>
+            <p id="game-over-reason">You crashed!</p>
+            <div class="game-over-stats">
+                <p>Distance: <span id="final-distance">0</span>m</p>
+                <p>Points: <span id="final-score">0</span></p>
+                <p class="high-score">High Score: <span id="high-score">0</span></p>
+            </div>
+            <button id="restart-btn">TRY AGAIN</button>
+        </div>
+    </div>
+
+    <!-- ES Module script to start the game -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

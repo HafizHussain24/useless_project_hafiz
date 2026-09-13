@@ -1,0 +1,11 @@
+{
+  "name": "cusat-bike-ride",
+  "version": "1.0.0",
+  "description": "CUSAT Bike Ride - Browser Game",
+  "scripts": {
+    "dev": "npx http-server -c-1 -p 8080"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
