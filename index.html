@@ -22,16 +22,23 @@
 
     <div id="ui-layer">
         <!-- Main Menu -->
-        <div id="menu-screen" class="screen active">
-            <h1>CUSAT Bike Ride</h1>
-            <p>Endless 3D Rider</p>
-            <div class="instructions">
-                <p><strong>Controls:</strong></p>
-                <p>[W][A][S][D] or [Arrows] - Move / Brake</p>
-                <p>[Space] (Hold) - Equip Helmet</p>
-                <p>[E] - Pick up / Drop off passenger</p>
+        <div id="menu-screen" class="screen active crt-overlay">
+            <h1 class="neon-text">CUSAT Bike Ride</h1>
+            <div class="menu-content">
+                <div class="controls-box crt-box">
+                    <p class="crt-title">> SYSTEM CONTROLS_</p>
+                    <ul>
+                        <li><span class="key">[W][A][S][D]</span> <span class="action">Move / Brake</span></li>
+                        <li><span class="key">[SPACE]</span> <span class="action">Equip Helmet</span></li>
+                        <li><span class="key">[E]</span> <span class="action">Pick up Passenger</span></li>
+                    </ul>
+                </div>
+                <div class="description-box crt-box">
+                    <p class="crt-title">> MISSION BRIEF_</p>
+                    <p class="witty-desc">Survive the brutal commute through CUSAT. Dodge stray animals, pick up illegal triples passengers to use as human shields against speedbumps, and outrun the MVD.</p>
+                </div>
             </div>
-            <button id="start-btn">START RIDE</button>
+            <button id="start-btn" class="crt-btn">INITIALIZE RIDE</button>
         </div>
 
         <!-- HUD -->
@@ -68,14 +75,17 @@
 
         <!-- Game Over Screen -->
         <div id="game-over-screen" class="screen">
-            <h2>GAME OVER</h2>
-            <p id="game-over-reason">You crashed!</p>
+            <h1 id="game-over-header">GAMEOVER</h1>
+            <h2 id="game-over-reason">Crashed</h2>
             <div class="game-over-stats">
                 <p>Distance: <span id="final-distance">0</span>m</p>
                 <p>Points: <span id="final-score">0</span></p>
                 <p class="high-score">High Score: <span id="high-score">0</span></p>
             </div>
-            <button id="restart-btn">TRY AGAIN</button>
+            <div class="instructions">
+                <p id="game-over-tip">Better luck next time!</p>
+            </div>
+            <button id="restart-btn" class="crt-btn">TRY AGAIN</button>
         </div>
     </div>
 

@@ -77,6 +77,21 @@ export class Engine {
         }
     }
     
+    updateMenuCamera(targetPosition, angle) {
+        const radius = 18;
+        // Calculate rotating position
+        this.idealCameraPos.x = targetPosition.x + Math.sin(angle) * radius;
+        this.idealCameraPos.y = targetPosition.y + 7;
+        this.idealCameraPos.z = targetPosition.z + Math.cos(angle) * radius;
+        
+        // Smoothly move towards the rotating position
+        this.camera.position.lerp(this.idealCameraPos, 0.05);
+        
+        // Look at the bike smoothly
+        this.lookAtPos.copy(targetPosition).add(new THREE.Vector3(0, 2, 0));
+        this.camera.lookAt(this.lookAtPos);
+    }
+    
     shake(intensity) {
         this.shakeIntensity = intensity;
     }

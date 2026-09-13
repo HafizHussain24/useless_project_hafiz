@@ -63,10 +63,45 @@ body {
     pointer-events: auto; /* Re-enable for buttons */
 }
 
-/* Menu & Game Over */
-#menu-screen, #game-over-screen {
+/* Game Over Base */
+#game-over-screen {
     background: rgba(33, 33, 33, 0.85);
     backdrop-filter: blur(5px);
+    transition: background 0.5s ease;
+}
+
+/* Death Types */
+#game-over-screen.death-busted {
+    animation: police-flash 0.5s infinite;
+}
+
+#game-over-screen.death-wasted {
+    background: radial-gradient(circle, rgba(139,0,0,0.6) 0%, rgba(50,0,0,0.95) 100%);
+}
+
+#game-over-screen.death-crash {
+    background: rgba(0, 0, 0, 0.9);
+    animation: screen-shake 0.3s;
+}
+
+@keyframes police-flash {
+    0%, 100% { background: rgba(255, 0, 0, 0.4); backdrop-filter: blur(8px); }
+    50% { background: rgba(0, 0, 255, 0.4); backdrop-filter: blur(8px); }
+}
+
+@keyframes screen-shake {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(-10px, 10px) rotate(-1deg); }
+    40% { transform: translate(10px, -10px) rotate(1deg); }
+    60% { transform: translate(-10px, -10px) rotate(-1deg); }
+    80% { transform: translate(10px, 10px) rotate(1deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Menu Screen */
+#menu-screen {
+    /* Transparent so we can see the cinematic camera pan */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 20%, rgba(0,0,0,0.8) 100%);
 }
 
 h1, h2 {
@@ -88,43 +123,132 @@ p {
     margin-bottom: 15px;
 }
 
-.instructions {
-    background: rgba(0,0,0,0.5);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    text-align: left;
+/* --- CRT Retro Menu Styles --- */
+.crt-overlay::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+.neon-text {
+    font-size: 3rem;
+    color: #4CAF50;
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 20px #4CAF50,
+        0 0 40px #4CAF50,
+        0 0 80px #4CAF50;
+    animation: flicker 2s infinite alternate;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+    }
+    20%, 24%, 55% {
+        opacity: 0.5;
+    }
+}
+
+.menu-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 40px;
+    z-index: 5;
+}
+
+.crt-box {
+    background: rgba(0, 20, 0, 0.6);
     border: 2px solid var(--primary);
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: inset 0 0 15px rgba(76, 175, 80, 0.2), 0 0 10px rgba(76, 175, 80, 0.4);
+    width: 350px;
 }
 
-.instructions p {
-    font-size: 1rem;
-    margin-bottom: 10px;
-}
-
-button {
+.crt-title {
+    color: var(--primary);
     font-family: var(--font-heading);
-    padding: 15px 30px;
     font-size: 1rem;
-    background-color: var(--primary);
-    color: white;
-    border: 2px solid white;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--primary);
+    padding-bottom: 10px;
+    text-shadow: 0 0 5px var(--primary);
+}
+
+.controls-box ul {
+    list-style: none;
+}
+
+.controls-box li {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.controls-box .key {
+    color: var(--warning);
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    text-shadow: 0 0 5px var(--warning);
+}
+
+.controls-box .action {
+    color: var(--light);
+    font-size: 1rem;
+    margin-left: 10px;
+}
+
+.witty-desc {
+    color: var(--light);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+.crt-btn {
+    font-family: var(--font-heading);
+    padding: 20px 40px;
+    font-size: 1.2rem;
+    background-color: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
     cursor: pointer;
     border-radius: 4px;
-    transition: transform 0.1s, background-color 0.2s;
-    box-shadow: 0 4px 0 #388E3C;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.3), inset 0 0 15px rgba(76, 175, 80, 0.2);
+    text-shadow: 0 0 5px var(--primary);
+    z-index: 5;
 }
 
-button:hover {
-    background-color: #45a049;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 #388E3C;
+.crt-btn:hover {
+    background-color: var(--primary);
+    color: #000;
+    box-shadow: 0 0 30px rgba(76, 175, 80, 0.8);
+    text-shadow: none;
 }
 
-button:active {
-    transform: translateY(4px);
-    box-shadow: none;
+.crt-btn:active {
+    transform: scale(0.95);
 }
+
+/* --- End Menu Styles --- */
 
 /* HUD */
 .hud-top {

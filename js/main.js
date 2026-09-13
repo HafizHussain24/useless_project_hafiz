@@ -59,6 +59,8 @@ class Game {
             menu: document.getElementById('menu-screen'),
             hud: document.getElementById('hud-screen'),
             gameOver: document.getElementById('game-over-screen'),
+            gameOverHeader: document.getElementById('game-over-header'),
+            gameOverTip: document.getElementById('game-over-tip'),
             distanceVal: document.getElementById('distance-val'),
             pointsVal: document.getElementById('points-val'),
             speedVal: document.getElementById('speed-val'),
@@ -125,7 +127,7 @@ class Game {
         this.ragdolls = [];
         
         this.ui.menu.classList.remove('active');
-        this.ui.gameOver.classList.remove('active');
+        this.ui.gameOver.classList.remove('active', 'death-busted', 'death-wasted', 'death-crash');
         this.ui.hud.classList.add('active');
         this.ui.notify.innerText = '';
         
@@ -138,15 +140,30 @@ class Game {
         this.clock.start();
     }
 
-    endGame(reason) {
+    endGame(reason, type = 'crash') {
         this.state = 'GAMEOVER';
         this.bike.crash();
         this.audio.stopEngine();
         this.audio.playGameOver();
         
         this.ui.hud.classList.remove('active');
-        this.ui.gameOver.classList.add('active');
+        this.ui.gameOver.classList.remove('death-busted', 'death-wasted', 'death-crash');
+        this.ui.gameOver.classList.add('active', `death-${type}`);
         this.ui.gameOverReason.innerText = reason;
+        
+        if (type === 'busted') {
+            this.ui.gameOverHeader.innerText = "BUSTED!";
+            this.ui.gameOverTip.innerText = "Pro Tip: You can drop off passengers using [E] right before you pass the jeep!";
+            this.ui.gameOverHeader.style.color = 'var(--light)';
+        } else if (type === 'wasted') {
+            this.ui.gameOverHeader.innerText = "WASTED";
+            this.ui.gameOverTip.innerText = "The animals in CUSAT have the right of way. Use your brakes [S].";
+            this.ui.gameOverHeader.style.color = 'var(--danger)';
+        } else {
+            this.ui.gameOverHeader.innerText = "SPINAL INJURY";
+            this.ui.gameOverTip.innerText = "Hit a speed bump too fast. Use passengers to absorb the shock next time.";
+            this.ui.gameOverHeader.style.color = 'var(--warning)';
+        }
         
         const finalDist = Math.floor(this.distance);
         const finalPts = Math.floor(this.points);
@@ -349,7 +366,7 @@ class Game {
                         this.audio.playEject();
                         this.bike.speed = Math.max(this.bike.minSpeed, this.bike.speed - 15);
                     } else {
-                        this.endGame(`Hit a speed bump too fast again!`);
+                        this.endGame(`Hit a speed bump too fast!`, 'crash');
                     }
                 } else {
                     // Safe speed over speed bump
@@ -366,7 +383,7 @@ class Game {
                 this.points = Math.max(0, this.points - 100);
                 this.showNotification("-100 Points! Hit a pothole");
             } else if (hit.type === 'cow' || hit.type === 'dog') {
-                this.endGame(`Crashed into a ${hit.type}!`);
+                this.endGame(`Crashed into a ${hit.type}!`, 'wasted');
             }
         }
         
@@ -411,9 +428,9 @@ class Game {
         const passedJeep = Collision.checkJeepPass(this.bike, this.hazardSpawner.hazards);
         if (passedJeep) {
             if (this.bike.hasPassenger) {
-                this.endGame("Busted by MVD! Triples is illegal!");
+                this.endGame("Fine: ₹2000 - Triples Riding!", 'busted');
             } else if (!this.bike.hasHelmet) {
-                this.endGame("Busted by MVD! No Helmet!");
+                this.endGame("Fine: ₹500 - No Helmet!", 'busted');
             } else {
                 this.points += 200;
                 this.showNotification("+200 Points! MVD Checkpoint Cleared");
@@ -428,10 +445,18 @@ class Game {
 
         if (this.state === 'PLAYING') {
             this.updateGameplay(dt);
+            // Update camera to follow bike
+            this.engine.updateCamera(this.bike.position);
+        } else {
+            // Cinematic camera pan for MENU and GAMEOVER states
+            if (!this.menuAngle) this.menuAngle = 0;
+            this.menuAngle += dt * 0.3; // Rotation speed
+            
+            // Keep drawing the scene elements at their idle positions
+            this.hazardSpawner.update(dt, this.bike.position);
+            
+            this.engine.updateMenuCamera(this.bike.position, this.menuAngle);
         }
-        
-        // Update camera to follow bike
-        this.engine.updateCamera(this.bike.position);
         
         this.engine.render();
     }
