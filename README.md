@@ -44,14 +44,14 @@ Then navigate to http://localhost:8080 in your web browser.
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![Main Menu](./assets/screenshot1.png)
+*The Main Menu showing the controls and retro arcade vibe before starting the ride.*
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+![Equipping Helmet in Sahara Hostel](./assets/screenshot2.png)
+*Equipping the helmet while navigating the hazy, sandy Sahara Hostel phase.*
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![Pipeline Road Hazards](./assets/screenshot3.png)
+*Dodging a gauntlet of speedbumps and speed limit signs on Pipeline Road near a local Chayakada.*
 
 # Diagrams
 ![Workflow](https://github.com/user-attachments/assets/architecture-diagram-placeholder)
@@ -73,7 +73,7 @@ graph TD
 
 ### Project Demo
 # Video
-[Add your demo video link here]
+[CusatRide Demo Gameplay](https://drive.google.com/file/d/1nrTP0FdJ0sBYx0ytTsnx5w_43CxGomM3/view?usp=sharing)
 *Gameplay recording demonstrating the Triples mechanic and MVD avoidance.*
 
 # Additional Demos
