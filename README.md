@@ -54,7 +54,6 @@ For Software:
 *Dodging a gauntlet of speedbumps and speed limit signs on Pipeline Road near a local Chayakada.*
 
 # Diagrams
-![Workflow](https://github.com/user-attachments/assets/architecture-diagram-placeholder)
 *Architecture of CusatRide*
 
 ```mermaid
@@ -77,7 +76,7 @@ graph TD
 *Gameplay recording demonstrating the Triples mechanic and MVD avoidance.*
 
 # Additional Demos
-[Add any extra demo materials/links]
+None yet!
 
 ## Team Contributions
 - Hafiz Hussain: Core Game Engine Architecture, 3D Rendering (Three.js), Physics & Collision Systems, and Web Audio Synthesis.
