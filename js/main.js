@@ -13,6 +13,7 @@ class Game {
         this.hazardSpawner = new HazardSpawner(this.engine.scene);
         this.roadManager = new RoadManager(this.engine.scene, this.hazardSpawner);
         this.audio = new AudioController();
+        this.audio.init(); // Start loading audio buffers
         
         // Game State
         this.state = 'MENU'; // MENU, PLAYING, GAMEOVER
@@ -41,7 +42,9 @@ class Game {
             right: false,
             space: false,
             e: false,
-            ePressedThisFrame: false
+            ePressedThisFrame: false,
+            h: false,
+            hPressedThisFrame: false
         };
 
         this.clock = new THREE.Clock();
@@ -111,6 +114,12 @@ class Game {
                     this.input.ePressedThisFrame = true;
                 }
                 this.input.e = isDown;
+                break;
+            case 'KeyH':
+                if (isDown && !this.input.h) {
+                    this.input.hPressedThisFrame = true;
+                }
+                this.input.h = isDown;
                 break;
         }
     }
@@ -433,11 +442,20 @@ class Game {
                 this.endGame("Fine: ₹500 - No Helmet!", 'busted');
             } else {
                 this.points += 200;
+                this.audio.playMVD();
                 this.showNotification("+200 Points! MVD Checkpoint Cleared");
             }
         }
 
+        // Horn
+        if (this.input.hPressedThisFrame) {
+            this.audio.playHorn();
+            // Optionally, we could add a visual effect or notification, e.g.:
+            // this.showNotification("BEEP BEEP!");
+        }
+
         this.input.ePressedThisFrame = false;
+        this.input.hPressedThisFrame = false;
     }
 
     loop() {

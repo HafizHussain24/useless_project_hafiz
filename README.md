@@ -72,7 +72,7 @@ graph TD
 
 ### Project Demo
 # Video
-[CusatRide Demo Gameplay](https://drive.google.com/file/d/1nrTP0FdJ0sBYx0ytTsnx5w_43CxGomM3/view?usp=sharing)
+[CusatRide Demo Gameplay](https://drive.google.com/file/d/15yI3or-18AkvotLd_wAdhDbmzgIG0CkQ/view?usp=sharing)
 *Gameplay recording demonstrating the Triples mechanic and MVD avoidance.*
 
 # Additional Demos
